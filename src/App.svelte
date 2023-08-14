@@ -1,0 +1,140 @@
+<script>
+  const urls = [
+    "https://images.unsplash.com/photo-1619476266550-bc9f04e57952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmVhcnN8ZW58MHwxfDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "https://images.unsplash.com/photo-1592658242534-4fd3f54f468a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80",
+    "https://images.unsplash.com/photo-1561127954-65393e6644d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmVhcnN8ZW58MHwxfDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "https://images.unsplash.com/photo-1576076819613-26f8537ae375?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmVhcnN8ZW58MHwxfDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "https://images.unsplash.com/photo-1595173425119-1c54835c1874?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGJlYXJzfGVufDB8MXwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+    "https://images.unsplash.com/photo-1581098031793-61531ade4318?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGJlYXJzfGVufDB8MXwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+    "https://images.unsplash.com/photo-1569545957151-ad2f428c2242?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fGJlYXJzfGVufDB8MXwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+    "https://images.unsplash.com/photo-1496297679486-1a1607669129?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Z3Jpemx5JTIwYmVhciUyMGNhcnRvb258ZW58MHwxfDB8fHww&auto=format&fit=crop&w=500&q=60",
+  ];
+
+  const size = 4;
+  $: current = urls.slice(1, 5);
+
+  $: main_ix = 0;
+</script>
+
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+/>
+
+<h1>Caroussel</h1>
+<div class="outer">
+  <div class="caroussel">
+    <div class="main-img">
+      <img class="central-img" src={current[main_ix]} alt="" />
+    </div>
+    <div class="reel">
+      <button
+        ><span class="material-symbols-outlined">
+          navigate_before
+        </span></button
+      >
+      <section class="reel-items">
+        {#each current as url, i}
+          {#if main_ix === i}
+            <div class="reel-item selected">
+              <img
+                src={url}
+                alt=""
+                class="reel-img"
+                on:click={() => (main_ix = i)}
+              />
+            </div>
+          {:else}
+            <div class="reel-item">
+              <img
+                src={url}
+                alt=""
+                class="reel-img"
+                on:click={() => (main_ix = i)}
+              />
+            </div>
+          {/if}
+        {/each}
+        <!-- <div class="reel-item">
+			<img src={current[0]} alt="" class="reel-img">
+		</div> -->
+      </section>
+      <button>
+        <span class="material-symbols-outlined"> navigate_next </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  * {
+    margin: 0%;
+    box-sizing: border-box;
+  }
+  .outer {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  .main-img {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 25px;
+  }
+  .central-img {
+    width: 100%;
+    transition: all 500ms ease-in-out;
+  }
+
+  .reel {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1vh;
+    width: 300px;
+    height: 8vh;
+    justify-content: center;
+  }
+
+  .reel-items {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .reel-item {
+    flex: 0.25;
+    border: 1px solid black;
+    border-radius: 25%;
+    margin: 0% 1%;
+    transition: border-color 500ms ease-in-out;
+    width: 25%;
+    overflow: hidden;
+  }
+
+  .selected {
+	border: 4px solid rgb(255, 196, 0);
+  }
+
+  .reel-img {
+    width: 100%;
+  }
+
+  .reel-item:hover {
+    border-color: rgb(255, 196, 0);
+  }
+
+  button {
+    width: 2vw;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  button:hover {
+    background-color: rgb(218, 218, 218);
+  }
+</style>
