@@ -1,4 +1,5 @@
 <script>
+	import { fade } from "svelte/transition";
   const urls = [
     "https://images.unsplash.com/photo-1619476266550-bc9f04e57952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmVhcnN8ZW58MHwxfDB8fHww&auto=format&fit=crop&w=500&q=60",
     "https://images.unsplash.com/photo-1592658242534-4fd3f54f468a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80",
@@ -11,9 +12,29 @@
   ];
 
   const size = 4;
-  $: current = urls.slice(1, 5);
+  $: prev = 0
+  $: next = 4
+  $: current = urls.slice(prev, next);
 
   $: main_ix = 0;
+
+  function go_back() {
+    if (prev === 0) {
+      return -1;
+    }
+    prev--;
+    next--
+  }
+
+  function go_next() {
+    if (next >= urls.length) {
+      console.log(next);
+      return -1
+    }
+    prev++;
+    next++;
+  }
+
 </script>
 
 <link
@@ -25,10 +46,10 @@
 <div class="outer">
   <div class="caroussel">
     <div class="main-img">
-      <img class="central-img" src={current[main_ix]} alt="" />
+      <img class="central-img" src={current[main_ix]} out:fade={{ duration: 300}} alt="" />
     </div>
     <div class="reel">
-      <button
+      <button on:click={go_back}
         ><span class="material-symbols-outlined">
           navigate_before
         </span></button
@@ -59,7 +80,7 @@
 			<img src={current[0]} alt="" class="reel-img">
 		</div> -->
       </section>
-      <button>
+      <button on:click={go_next}>
         <span class="material-symbols-outlined"> navigate_next </span>
       </button>
     </div>
@@ -85,7 +106,7 @@
   }
   .central-img {
     width: 100%;
-    transition: all 500ms ease-in-out;
+	transition: opacity 0.3s ease-in-out;;
   }
 
   .reel {
@@ -93,7 +114,7 @@
     flex-direction: row;
     margin-top: 1vh;
     width: 300px;
-    height: 8vh;
+    /* height: 8vh; */
     justify-content: center;
   }
 
@@ -109,7 +130,9 @@
     border-radius: 25%;
     margin: 0% 1%;
     transition: border-color 500ms ease-in-out;
-    width: 25%;
+    /* width: 25%; */
+	width: 8vw;
+	height: 8vh;
     overflow: hidden;
   }
 
