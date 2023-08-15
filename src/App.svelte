@@ -1,5 +1,5 @@
 <script>
-	import { fade } from "svelte/transition";
+  import { fade } from "svelte/transition";
   const urls = [
     "https://images.unsplash.com/photo-1619476266550-bc9f04e57952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmVhcnN8ZW58MHwxfDB8fHww&auto=format&fit=crop&w=500&q=60",
     "https://images.unsplash.com/photo-1592658242534-4fd3f54f468a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80",
@@ -12,8 +12,8 @@
   ];
 
   const size = 4;
-  $: prev = 0
-  $: next = 4
+  $: prev = 0;
+  $: next = 4;
   $: current = urls.slice(prev, next);
 
   $: main_ix = 0;
@@ -23,18 +23,17 @@
       return -1;
     }
     prev--;
-    next--
+    next--;
   }
 
   function go_next() {
     if (next >= urls.length) {
       console.log(next);
-      return -1
+      return -1;
     }
     prev++;
     next++;
   }
-
 </script>
 
 <link
@@ -46,13 +45,16 @@
 <div class="outer">
   <div class="caroussel">
     <div class="main-img">
-      <img class="central-img" src={current[main_ix]} out:fade={{ duration: 300}} alt="" />
+      <img
+        class="central-img"
+        src={current[main_ix]}
+        out:fade={{ duration: 300 }}
+        alt=""
+      />
     </div>
     <div class="reel">
       <button on:click={go_back}
-        ><span class="material-symbols-outlined">
-          navigate_before
-        </span></button
+        ><span class="material-symbols-outlined"> expand_less </span></button
       >
       <section class="reel-items">
         {#each current as url, i}
@@ -81,7 +83,7 @@
 		</div> -->
       </section>
       <button on:click={go_next}>
-        <span class="material-symbols-outlined"> navigate_next </span>
+        <span class="material-symbols-outlined"> keyboard_arrow_down </span>
       </button>
     </div>
   </div>
@@ -91,6 +93,12 @@
   * {
     margin: 0%;
     box-sizing: border-box;
+  }
+
+  .caroussel {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
   }
   .outer {
     display: flex;
@@ -103,45 +111,57 @@
     height: 300px;
     overflow: hidden;
     border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .central-img {
     width: 100%;
-	transition: opacity 0.3s ease-in-out;;
+    transition: opacity 0.3s ease-in-out;
   }
 
   .reel {
     display: flex;
-    flex-direction: row;
-    margin-top: 1vh;
-    width: 300px;
-    /* height: 8vh; */
+    flex-direction: column;
+    margin: 1vh 1vw;
+    /* width: 300px; */
+    height: 300px;
     justify-content: center;
+    align-items: center;
   }
 
   .reel-items {
-    width: 100%;
+    /* width: 100%; */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    height: 100%;
+    width: 5vw;
   }
 
   .reel-item {
     flex: 0.25;
     border: 1px solid black;
     border-radius: 25%;
-    margin: 0% 1%;
+    /* margin: 1% 0%; */
     transition: border-color 500ms ease-in-out;
     /* width: 25%; */
-	width: 8vw;
-	height: 8vh;
+    /* width: 5vw; */
+    /* height: 5vh; */
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10%;
   }
 
   .selected {
-	border: 4px solid rgb(255, 196, 0);
+    border: 4px solid rgb(255, 196, 0);
   }
 
   .reel-img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .reel-item:hover {
@@ -149,7 +169,8 @@
   }
 
   button {
-    width: 2vw;
+    /* width: 2vw; */
+    width: 100%;
     background: none;
     border: none;
     display: flex;
@@ -159,5 +180,33 @@
 
   button:hover {
     background-color: rgb(218, 218, 218);
+  }
+
+  @media (max-width: 425px) {
+    .caroussel {
+      flex-direction: column;
+    }
+
+    .reel, .reel-items {
+      flex-direction: row;
+    }
+
+    .reel {
+      width: 300px;
+      height: auto;
+    }
+
+    .reel-items {
+      width: auto;
+      height: auto;
+    }
+
+    .reel-item {
+      margin: 0% 1%;
+    }
+
+    button {
+      /* width: 2vw; */
+    }
   }
 </style>
