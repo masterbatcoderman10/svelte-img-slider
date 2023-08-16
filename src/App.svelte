@@ -1,5 +1,6 @@
 <script>
   import { fade } from "svelte/transition";
+  // import { watchResize} from "svelte-watch-resize";
   const urls = [
     "https://images.unsplash.com/photo-1619476266550-bc9f04e57952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmVhcnN8ZW58MHwxfDB8fHww&auto=format&fit=crop&w=500&q=60",
     "https://images.unsplash.com/photo-1592658242534-4fd3f54f468a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80",
@@ -17,6 +18,20 @@
   $: current = urls.slice(prev, next);
 
   $: main_ix = 0;
+
+  // $: icon_1 = window.innerWidth <= 425 ? "left" : "up";
+  // $: icon_2 = window.innerWidth <= 425 ? "right" : "down";
+
+  const bp = 768
+
+  $: icon_1 = window.innerWidth <= bp ? "left" : "up";
+  $: icon_2 = window.innerWidth <= bp ? "right" : "down";
+
+  function change_icon() {
+      icon_1 = window.innerWidth <= bp ? "left" : "up";
+      icon_2 = window.innerWidth <= bp ? "right" : "down"
+      console.log(window.innerWidth);
+  }
 
   function go_back() {
     if (prev === 0) {
@@ -36,6 +51,8 @@
   }
 </script>
 
+<svelte:window on:resize={change_icon}></svelte:window>
+
 <link
   rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
@@ -54,7 +71,7 @@
     </div>
     <div class="reel">
       <button on:click={go_back}
-        ><span class="material-symbols-outlined"> expand_less </span></button
+        ><span class="material-symbols-outlined"> keyboard_arrow_{icon_1} </span></button
       >
       <section class="reel-items">
         {#each current as url, i}
@@ -83,7 +100,7 @@
 		</div> -->
       </section>
       <button on:click={go_next}>
-        <span class="material-symbols-outlined"> keyboard_arrow_down </span>
+        <span class="material-symbols-outlined"> keyboard_arrow_{icon_2} </span>
       </button>
     </div>
   </div>
@@ -182,7 +199,7 @@
     background-color: rgb(218, 218, 218);
   }
 
-  @media (max-width: 425px) {
+  @media (max-width: 768px) {
     .caroussel {
       flex-direction: column;
     }
@@ -205,8 +222,5 @@
       margin: 0% 1%;
     }
 
-    button {
-      /* width: 2vw; */
-    }
   }
 </style>
