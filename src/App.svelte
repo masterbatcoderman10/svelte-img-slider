@@ -107,6 +107,10 @@
 </div>
 
 <style>
+
+  :root {
+    --s : 30vw
+  }
   * {
     margin: 0%;
     box-sizing: border-box;
@@ -124,8 +128,8 @@
     align-items: center;
   }
   .main-img {
-    width: 300px;
-    height: 300px;
+    width: var(--s);
+    height: var(--s);
     overflow: hidden;
     border-radius: 25px;
     display: flex;
@@ -142,7 +146,7 @@
     flex-direction: column;
     margin: 1vh 1vw;
     /* width: 300px; */
-    height: 300px;
+    height: var(--s);
     justify-content: center;
     align-items: center;
   }
@@ -200,8 +204,17 @@
   }
 
   @media (max-width: 768px) {
+
+    :root {
+      --s: 50vw;
+    }
     .caroussel {
       flex-direction: column;
+    }
+
+    .main-img {
+      width: var(--s);
+      height: var(--s);
     }
 
     .reel, .reel-items {
@@ -209,7 +222,7 @@
     }
 
     .reel {
-      width: 300px;
+      width: 70vw;
       height: auto;
     }
 
